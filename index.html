@@ -110,4 +110,116 @@ margin:20px 0;
 padding-bottom:15px;
 border-bottom:1px solid rgba(255,255,255,0.2);
 }
+</style>
+</head>
+<body>
+
+<!-- Video Background -->
+<video class="bg" autoplay muted loop>
+  <source src="your-video-file.mp4" type="video/mp4">
+</video>
+
+<!-- Navigation -->
+<nav>
+  <a href="#home">HOME</a>
+  <a href="#menu">MENU</a>
+  <a href="#about">ABOUT</a>
+  <a href="#contact">CONTACT</a>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <h1>EMREYS COFFEE HOUSE</h1>
+</section>
+
+<!-- Menu Section -->
+<section id="menu">
+  <h2>OUR MENU</h2>
+  <div class="menu-category">
+    <h3>ESPRESSO DRINKS</h3>
+    <div class="menu-content">
+      <div class="menu-item">
+        <strong>Espresso</strong> - Premium shot
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>/* ===== Navbar ===== */
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:60px;
+padding:20px;
+background:rgba(18,63,94,0.4);
+backdrop-filter:blur(15px);
+z-index:1000;
+}
+
+nav a{
+color:#fff;
+text-decoration:none;
+font-size:18px;
+letter-spacing:3px;
+transition:0.3s;
+}
+
+nav a:hover{
+opacity:0.7;
+}
+
+/* ===== Sections ===== */
+section{
+padding:120px 10%;
+min-height:100vh;
+}
+
+h1,h2,h3{
+font-family:'Playfair Display',serif;
+}
+
+/* ===== Hero ===== */
+.hero{
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:64px;
+letter-spacing:3px;
+}
+
+/* ===== Menu ===== */
+.menu-category{
+background:rgba(255,255,255,0.08);
+padding:25px;
+margin:25px 0;
+border-radius:20px;
+cursor:pointer;
+transition:0.4s;
+backdrop-filter:blur(10px);
+}
+
+.menu-category:hover{
+background:rgba(255,255,255,0.15);
+transform:scale(1.02);
+}
+
+.menu-content{
+max-height:0;
+overflow:hidden;
+transition:0.6s ease;
+}
+
+.menu-item{
+margin:20px 0;
+padding-bottom:15px;
+border-bottom:1px solid rgba(255,255,255,0.2);
+}
 
