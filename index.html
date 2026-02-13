@@ -4,273 +4,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emryes Coffee House</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Exotic Luxury Font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Playfair Display', serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
-body {
-  background: #1c1c1c;
-  color: #f5f5f5;
-  overflow-x: hidden;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 3%;
-  background: rgba(28,28,28,0.9);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-header h1 {
-  font-size: 2rem;
-  color: #fff;
-}
-nav a {
-  color: #fff;
-  margin-left: 2rem;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-}
-nav a:hover {
-  color: #c49b66;
-}
-.section {
-  padding: 5rem 3%;
-  position: relative;
-}
-.parallax {
-  background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1470&q=80') center/cover fixed no-repeat;
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.parallax h2 {
-  font-size: 3rem;
-  color: #fff;
-  text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
-}
-.menu-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-.card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  padding: 1.5rem;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.4);
-}
-.card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #c49b66;
-}
-.items {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease;
-}
-.items p {
-  padding: 0.3rem 0;
-}
-.branch {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background: rgba(255,255,255,0.05);
-  border-radius: 15px;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.branch a {
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  background: #c49b66;
-  color: #fff;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.branch a:hover {
-  background: #a07a4d;
-}
-.contact {
-  text-align: center;
-  padding: 3rem 0;
-}
-.contact p {
-  margin: 0.5rem 0;
-}
-footer {
-  text-align: center;
-  padding: 2rem 0;
-  background: rgba(28,28,28,0.9);
-  color: #aaa;
-}
-</style>
-</head>
-<body>
 
-<header>
-  <h1>Emryes Coffee House</h1>
-  <nav>
-    <a href="#menu">Menu</a>
-    <a href="#branch">Branch</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<section class="parallax">
-  <h2>Luxury Coffee Experience</h2>
-</section>
-
-<section id="menu" class="section">
-  <h2 style="text-align:center; margin-bottom:3rem;">Our Coffee Menu</h2>
-  <div class="menu-container">
-
-    <!-- Hot Coffee -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Hot Coffee</h3>
-      <div class="items">
-        <p>Espresso — S: 1.5</p>
-        <p>Americano — S: 2.5 / M: 3.25</p>
-        <p>American — S: 2.5 / M: 3.25</p>
-        <p>Latte — S: 3.00 / M: 3.75</p>
-        <p>Cappuccino — S: 3.00 / M: 3.75</p>
-        <p>Flat White — S: 2.75</p>
-        <p>Cortado — S: 3.00</p>
-        <p>Spanish Latte — S: 3.00 / M: 3.75</p>
-        <p>Mocha — S: 3.00 / M: 3.75</p>
-        <p>Caramel Macchiato — S: 3.00 / M: 3.75</p>
-        <p>Hot Chocolate — S: 3.00 / M: 3.75</p>
-        <p>Turkish Coffee — S: 2.00 / M: 3.00</p>
-      </div>
-    </div>
-
-    <!-- Cold Coffee -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Cold Coffee</h3>
-      <div class="items">
-        <p>Iced Americano — 2.50</p>
-        <p>Iced Latte — 3.00</p>
-        <p>Iced Flat White — 3.00</p>
-        <p>Iced Caramel Macchiato — 3.00</p>
-        <p>Iced Mocha — 3.25</p>
-        <p>Iced Spanish Latte — 3.50</p>
-      </div>
-    </div>
-
-    <!-- Special Drinks -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Special Drinks</h3>
-      <div class="items">
-        <p>Emrys Bom — S: 4.00</p>
-        <p>Emrys Latte — S: 3.75 / M: 4.50</p>
-        <p>Pistachio Latte — S: 4.00 / M: 4.75</p>
-      </div>
-    </div>
-
-    <!-- Frappes -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Frappes</h3>
-      <div class="items">
-        <p>Caramel Frappe — 3.75</p>
-        <p>Vanilla Frappe — 3.75</p>
-        <p>Mocha Frappe — 3.75</p>
-        <p>Ferraro Frappe — 4.25</p>
-      </div>
-    </div>
-
-    <!-- Smoothies -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Smoothies</h3>
-      <div class="items">
-        <p>Passion Fruit & Mango — 3.50</p>
-        <p>Strawbeery Berry Mint — 3.50</p>
-        <p>Papaya & PinkGuava — 3.50</p>
-        <p>Lemon Cucumber Basil — 3.25</p>
-        <p>Blueberry Yogurt — 4.25</p>
-      </div>
-    </div>
-
-    <!-- Mojitos & Ice Tea -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Mojitos & Ice Tea</h3>
-      <div class="items">
-        <p>Peach Iced Tea — 3.00</p>
-        <p>Passion Mango Iced Tea — 3.25</p>
-        <p>Pink Guava Iced Tea — 3.25</p>
-        <p>Hibiscus Iced Tea — 3.25</p>
-        <p>Detox Iced Tea — 3.50</p>
-        <p>Passion Fruit & Orange — 3.25</p>
-        <p>Strawberry Basil — 3.50</p>
-        <p>Strawberry Berry Cucumber — 3.50</p>
-        <p>Pink Papaya — 3.50</p>
-        <p>Green Apple Kiwi — 3.25</p>
-        <p>Cinnamon Peach — 3.25</p>
-        <p>Bubble Gum — 3.25</p>
-      </div>
-    </div>
-
-    <!-- Water -->
-    <div class="card" onclick="toggleItems(this)">
-      <h3>Water & Energy</h3>
-      <div class="items">
-        <p>Water — 1.00</p>
-        <p>Redbull — 3.25</p>
-        <p>Oska Mineral — 1.50</p>
-        <p>Berain Sparkling — 2.00</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="branch" class="section">
-  <h2 style="text-align:center; margin-bottom:2rem;">Our Branch</h2>
-  <div class="branch">
-    <p>Visit our premium location:</p>
-    <a href="https://maps.app.goo.gl/ZpBQMe5TVaMo7KiR7" target="_blank">View Location</a>
-  </div>
-</section>
-
-<section id="contact" class="section contact">
-  <h2>Contact Us</h2>
-  <p>Email: <a href="mailto:emryscoffee@gmail.com">emryscoffee@gmail.com</a></p>
-  <p>Phone: <span>078xxxxxxx</span></p>
-</section>
-
-<footer>
-  &copy; 2026 Emryes Coffee House. All rights reserved.
-</footer>
-
-<script>
-function toggleItems(card) {
-  const items = card.querySelector('.items');
-  if(items.style.maxHeight){
-    items.style.maxHeight = null;
-  } else {
-    items.style.maxHeight = items.scrollHeight + "px";
-  }
+body{
+font-family:'Montserrat',sans-serif;
+color:#ffffff;
+background:#123f5e;
+overflow-x:hidden;
 }
-</script>
 
-</body>
-</html>
+/* ===== Background Video ===== */
+video.bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+filter:blur(10px) brightness(0.4);
+z-index:-1;
+}
+
+/* ===== Navbar ===== */
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:60px;
+padding:20px;
+background:rgba(18,63,94,0.4);
+backdrop-filter:blur(15px);
+z-index:1000;
+}
+
+nav a{
+color:#fff;
+text-decoration:none;
+font-size:18px;
+letter-spacing:3px;
+transition:0.3s;
+}
+
+nav a:hover{
+opacity:0.7;
+}
+
+/* ===== Sections ===== */
+section{
+padding:120px 10%;
+min-height:100vh;
+}
+
+h1,h2,h3{
+font-family:'Playfair Display',serif;
+}
+
+/* ===== Hero ===== */
+.hero{
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:64px;
+letter-spacing:3px;
+}
+
+/* ===== Menu ===== */
+.menu-category{
+background:rgba(255,255,255,0.08);
+padding:25px;
+margin:25px 0;
+border-radius:20px;
+cursor:pointer;
+transition:0.4s;
+backdrop-filter:blur(10px);
+}
+
+.menu-category:hover{
+background:rgba(255,255,255,0.15);
+transform:scale(1.02);
+}
+
+.menu-content{
+max-height:0;
+overflow:hidden;
+transition:0.6s ease;
+}
+
+.menu-item{
+margin:20px 0;
+padding-bottom:15px;
+border-bottom:1px solid rgba(255,255,255,0.2);
+}
