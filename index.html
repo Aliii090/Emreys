@@ -214,30 +214,139 @@ padding:40px;
 <!-- MENU -->
 
 <section id="menu" class="section">
-<h2 data-en="Coffee Menu" data-ar="قائمة المشروبات">Coffee Menu</h2>
+  <h2 data-en="Coffee Menu" data-ar="قائمة المشروبات">Coffee Menu</h2>
 
-<div class="menu-container">
+  <div class="menu-container">
 
-<div class="card" onclick="toggleItems(this)">
-<h3 data-en="Hot Coffee" data-ar="قهوة ساخنة">Hot Coffee</h3>
-<div class="items">
+    <!-- HOT COFFEE -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Hot Coffee" data-ar="قهوة ساخنة">Hot Coffee</h3>
+      <div class="items">
+        <div class="menu-item">Espresso<div class="single-price">1.5</div></div>
+        <div class="menu-item">Americano
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>2.5</span><span>3.25</span></div>
+        </div>
+        <div class="menu-item">American
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>2.5</span><span>3.25</span></div>
+        </div>
+        <div class="menu-item">Latte
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.00</span><span>3.75</span></div>
+        </div>
+        <div class="menu-item">Cappuccino
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.00</span><span>3.75</span></div>
+        </div>
+        <div class="menu-item">Flat White<div class="single-price">2.75</div></div>
+        <div class="menu-item">Cortado<div class="single-price">3.00</div></div>
+        <div class="menu-item">Spanish Latte
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.00</span><span>3.75</span></div>
+        </div>
+        <div class="menu-item">Mocha
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.00</span><span>3.75</span></div>
+        </div>
+        <div class="menu-item">Caramel Macchiato
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.00</span><span>3.75</span></div>
+        </div>
+        <div class="menu-item">Hot Chocolate
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.00</span><span>3.75</span></div>
+        </div>
+        <div class="menu-item">Turkish Coffee
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>2.00</span><span>3.00</span></div>
+        </div>
+      </div>
+    </div>
 
-<div class="menu-item">Espresso<div class="single-price">1.5</div></div>
+    <!-- COLD COFFEE -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Cold Coffee" data-ar="قهوة باردة">Cold Coffee</h3>
+      <div class="items">
+        <div class="menu-item">Iced Americano<div class="single-price">2.50</div></div>
+        <div class="menu-item">Iced Latte<div class="single-price">3.00</div></div>
+        <div class="menu-item">Iced Flat White<div class="single-price">3.00</div></div>
+        <div class="menu-item">Iced Caramel Macchiato<div class="single-price">3.00</div></div>
+        <div class="menu-item">Iced Mocha<div class="single-price">3.25</div></div>
+        <div class="menu-item">Iced Spanish Latte<div class="single-price">3.50</div></div>
+      </div>
+    </div>
 
-<div class="menu-item">Latte
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.00</span><span>3.75</span></div>
-</div>
+    <!-- SPECIAL DRINKS -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Special Drinks" data-ar="مشروبات خاصة">Special Drinks</h3>
+      <div class="items">
+        <div class="menu-item">Emrys Bom<div class="single-price">4.00</div></div>
+        <div class="menu-item">Emrys Latte
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>3.75</span><span>4.50</span></div>
+        </div>
+        <div class="menu-item">Pistachio Latte
+          <div class="size-row"><span>S</span><span>M</span></div>
+          <div class="price-row"><span>4.00</span><span>4.75</span></div>
+        </div>
+      </div>
+    </div>
 
-<div class="menu-item">Cappuccino
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.00</span><span>3.75</span></div>
-</div>
+    <!-- FRAPPES -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Frappes" data-ar="فرابتشينو">Frappes</h3>
+      <div class="items">
+        <div class="menu-item">Caramel Frappe<div class="single-price">3.75</div></div>
+        <div class="menu-item">Vanilla Frappe<div class="single-price">3.75</div></div>
+        <div class="menu-item">Mocha Frappe<div class="single-price">3.75</div></div>
+        <div class="menu-item">Ferraro Frappe<div class="single-price">4.25</div></div>
+      </div>
+    </div>
 
-</div>
-</div>
+    <!-- SMOOTHIES -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Smoothies" data-ar="سموذيز">Smoothies</h3>
+      <div class="items">
+        <div class="menu-item">Passion Fruit & Mango<div class="single-price">3.50</div></div>
+        <div class="menu-item">Strawbeery Berry Mint<div class="single-price">3.50</div></div>
+        <div class="menu-item">Papaya & PinkGuava<div class="single-price">3.50</div></div>
+        <div class="menu-item">Lemon Cucumber Basil<div class="single-price">3.25</div></div>
+        <div class="menu-item">Blueberry Yogurt<div class="single-price">4.25</div></div>
+      </div>
+    </div>
 
-</div>
+    <!-- MOJITOS & ICETEA -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Mojitos & Ice Tea" data-ar="موهيتو وشاي مثلج">Mojitos & Ice Tea</h3>
+      <div class="items">
+        <div class="menu-item">Peach Iced Tea<div class="single-price">3.00</div></div>
+        <div class="menu-item">Passion Mango Iced Tea<div class="single-price">3.25</div></div>
+        <div class="menu-item">Pink Guava Iced Tea<div class="single-price">3.25</div></div>
+        <div class="menu-item">Hibiscus Iced Tea<div class="single-price">3.25</div></div>
+        <div class="menu-item">Detox Iced Tea<div class="single-price">3.50</div></div>
+        <div class="menu-item">Passion Fruit & Orange<div class="single-price">3.25</div></div>
+        <div class="menu-item">Strawberry Basil<div class="single-price">3.50</div></div>
+        <div class="menu-item">Strawberry Berry Cucumber<div class="single-price">3.50</div></div>
+        <div class="menu-item">Pink Papaya<div class="single-price">3.50</div></div>
+        <div class="menu-item">Green Apple Kiwi<div class="single-price">3.25</div></div>
+        <div class="menu-item">Cinnamon Peach<div class="single-price">3.25</div></div>
+        <div class="menu-item">Bubble Gum<div class="single-price">3.25</div></div>
+      </div>
+    </div>
+
+    <!-- WATER -->
+    <div class="card" onclick="toggleItems(this)">
+      <h3 data-en="Water & Drinks" data-ar="مياه ومشروبات">Water & Drinks</h3>
+      <div class="items">
+        <div class="menu-item">Water<div class="single-price">1.00</div></div>
+        <div class="menu-item">Redbull<div class="single-price">3.25</div></div>
+        <div class="menu-item">Oska Mineral<div class="single-price">1.50</div></div>
+        <div class="menu-item">Berain Sparkling<div class="single-price">2.00</div></div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <section id="contact" class="section">
