@@ -5,28 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emryes Coffee House</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<!-- LUXURY FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 
+/* RESET */
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Playfair Display', serif;
 }
 
 body{
-color:#ffffff;
+font-family:Montserrat,sans-serif;
+color:#fff;
 overflow-x:hidden;
+}
+
+/* LOADING SCREEN */
+
+.loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#123f5e;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+font-family:Playfair Display;
+font-size:30px;
 }
 
 /* VIDEO BACKGROUND */
 
 .video-bg{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 object-fit:cover;
@@ -35,11 +50,9 @@ z-index:-2;
 
 .overlay{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
-background:rgba(18,63,94,0.7);
+background:rgba(18,63,94,.7);
 backdrop-filter:blur(12px);
 z-index:-1;
 }
@@ -51,22 +64,59 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px 6%;
-background:rgba(18,63,94,0.9);
+background:rgba(18,63,94,.9);
 position:sticky;
 top:0;
 }
 
+.logo{
+height:50px;
+}
+
 nav a{
-color:#ffffff;
-margin-left:30px;
+color:#fff;
+margin-left:25px;
 text-decoration:none;
-font-size:18px;
 }
 
 /* SECTIONS */
 
 .section{
-padding:80px 6%;
+padding:90px 6%;
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+
+.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* DRINK SLIDER */
+
+.slider{
+width:100%;
+overflow:hidden;
+margin:40px 0;
+}
+
+.slides{
+display:flex;
+animation:slide 15s infinite;
+}
+
+.slides img{
+width:100%;
+height:300px;
+object-fit:cover;
+}
+
+@keyframes slide{
+0%{transform:translateX(0)}
+33%{transform:translateX(-100%)}
+66%{transform:translateX(-200%)}
+100%{transform:translateX(0)}
 }
 
 /* MENU */
@@ -78,23 +128,12 @@ gap:30px;
 }
 
 .card{
-background:rgba(255,255,255,0.08);
-border:1px solid rgba(255,255,255,0.2);
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
 padding:25px;
 border-radius:18px;
 cursor:pointer;
-transition:0.3s;
 }
-
-.card:hover{
-transform:translateY(-8px);
-}
-
-.card h3{
-margin-bottom:15px;
-}
-
-/* expandable items */
 
 .items{
 max-height:0;
@@ -102,50 +141,30 @@ overflow:hidden;
 transition:max-height .5s ease;
 }
 
-/* menu item layout */
-
 .menu-item{
-margin:16px 0;
+margin:15px 0;
 }
 
-.size-row{
+.size-row,.price-row{
 display:grid;
 grid-template-columns:1fr 1fr;
-margin-top:5px;
-opacity:.8;
 }
 
-.price-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-font-weight:bold;
+.price-row{font-weight:bold}
+
+.single-price{font-weight:bold;margin-top:5px}
+
+/* LANGUAGE BUTTON */
+
+.lang-btn{
+cursor:pointer;
+background:white;
+color:#123f5e;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+margin-left:20px;
 }
-
-.single-price{
-margin-top:5px;
-font-weight:bold;
-}
-
-/* branch */
-
-.branch{
-text-align:center;
-background:rgba(255,255,255,0.08);
-padding:40px;
-border-radius:18px;
-}
-
-.branch a{
-display:inline-block;
-margin-top:15px;
-padding:12px 24px;
-background:#123f5e;
-color:white;
-text-decoration:none;
-border-radius:10px;
-}
-
-/* footer */
 
 footer{
 text-align:center;
@@ -157,43 +176,53 @@ padding:40px;
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
-<video class="video-bg" autoplay muted loop>
-<source src="background.mp4" type="video/mp4">
-</video>
+<div class="loader">Emryes Coffee House</div>
 
+<!-- VIDEO -->
+<video class="video-bg" autoplay muted loop>
+<source src="background.mp4">
+</video>
 <div class="overlay"></div>
 
 <header>
-<h2>Emryes Coffee House</h2>
+<div style="display:flex;align-items:center;gap:15px">
+<img src="logo.png" class="logo" onerror="this.style.display='none'">
+<h2 data-en="Emryes Coffee House" data-ar="إمرايس كوفي">Emryes Coffee House</h2>
+</div>
 
-<nav>
-<a href="#menu">Menu</a>
-<a href="#branch">Branch</a>
-<a href="#contact">Contact</a>
+<div>
+<nav style="display:inline">
+<a href="#menu" data-en="Menu" data-ar="القائمة">Menu</a>
+<a href="#contact" data-en="Contact" data-ar="اتصل بنا">Contact</a>
 </nav>
+<button class="lang-btn" onclick="toggleLang()">AR</button>
+</div>
 </header>
+
+<!-- SLIDING DRINK IMAGES -->
+
+<section class="section">
+<div class="slider">
+<div class="slides">
+<img src="drink1.jpg">
+<img src="drink2.jpg">
+<img src="drink3.jpg">
+</div>
+</div>
+</section>
 
 <!-- MENU -->
 
 <section id="menu" class="section">
-<h2 style="margin-bottom:40px;">Coffee Menu</h2>
+<h2 data-en="Coffee Menu" data-ar="قائمة المشروبات">Coffee Menu</h2>
 
 <div class="menu-container">
 
-<!-- HOT COFFEE -->
 <div class="card" onclick="toggleItems(this)">
-<h3>Hot Coffee</h3>
+<h3 data-en="Hot Coffee" data-ar="قهوة ساخنة">Hot Coffee</h3>
 <div class="items">
 
-<div class="menu-item">Espresso
-<div class="single-price">1.5</div>
-</div>
-
-<div class="menu-item">Americano
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>2.5</span><span>3.25</span></div>
-</div>
+<div class="menu-item">Espresso<div class="single-price">1.5</div></div>
 
 <div class="menu-item">Latte
 <div class="size-row"><span>S</span><span>M</span></div>
@@ -205,112 +234,47 @@ padding:40px;
 <div class="price-row"><span>3.00</span><span>3.75</span></div>
 </div>
 
-<div class="menu-item">Flat White
-<div class="single-price">2.75</div>
-</div>
-
-<div class="menu-item">Cortado
-<div class="single-price">3.00</div>
-</div>
-
-<div class="menu-item">Spanish Latte
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.00</span><span>3.75</span></div>
-</div>
-
-<div class="menu-item">Mocha
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.00</span><span>3.75</span></div>
-</div>
-
-<div class="menu-item">Caramel Macchiato
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.00</span><span>3.75</span></div>
-</div>
-
-<div class="menu-item">Hot Chocolate
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.00</span><span>3.75</span></div>
-</div>
-
-<div class="menu-item">Turkish Coffee
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>2.00</span><span>3.00</span></div>
-</div>
-
-</div>
-</div>
-
-<!-- COLD COFFEE -->
-<div class="card" onclick="toggleItems(this)">
-<h3>Cold Coffee</h3>
-<div class="items">
-<div class="menu-item">Iced Americano<div class="single-price">2.50</div></div>
-<div class="menu-item">Iced Latte<div class="single-price">3.00</div></div>
-<div class="menu-item">Iced Flat White<div class="single-price">3.00</div></div>
-<div class="menu-item">Iced Caramel Macchiato<div class="single-price">3.00</div></div>
-<div class="menu-item">Iced Mocha<div class="single-price">3.25</div></div>
-<div class="menu-item">Iced Spanish Latte<div class="single-price">3.50</div></div>
-</div>
-</div>
-
-<!-- SPECIAL -->
-<div class="card" onclick="toggleItems(this)">
-<h3>Special Drinks</h3>
-<div class="items">
-<div class="menu-item">Emrys Bom<div class="single-price">4.00</div></div>
-<div class="menu-item">Emrys Latte
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>3.75</span><span>4.50</span></div>
-</div>
-<div class="menu-item">Pistachio Latte
-<div class="size-row"><span>S</span><span>M</span></div>
-<div class="price-row"><span>4.00</span><span>4.75</span></div>
-</div>
-</div>
-</div>
-
-<!-- FRAPPES -->
-<div class="card" onclick="toggleItems(this)">
-<h3>Frappes</h3>
-<div class="items">
-<div class="menu-item">Caramel Frappe<div class="single-price">3.75</div></div>
-<div class="menu-item">Vanilla Frappe<div class="single-price">3.75</div></div>
-<div class="menu-item">Mocha Frappe<div class="single-price">3.75</div></div>
-<div class="menu-item">Ferraro Frappe<div class="single-price">4.25</div></div>
 </div>
 </div>
 
 </div>
 </section>
 
-<!-- BRANCH -->
-
-<section id="branch" class="section">
-<div class="branch">
-<p>Visit our location</p>
-<a href="https://maps.app.goo.gl/ZpBQMe5TVaMo7KiR7" target="_blank">
-View Location
-</a>
-</div>
-</section>
-
-<!-- CONTACT -->
-
-<section id="contact" class="section" style="text-align:center">
-<h3>Contact</h3>
+<section id="contact" class="section">
+<h2 data-en="Contact" data-ar="تواصل معنا">Contact</h2>
 <p>emryscoffee@gmail.com</p>
 </section>
 
-<footer>
-© 2026 Emryes Coffee House
-</footer>
+<footer>© 2026 Emryes Coffee House</footer>
 
 <script>
+
+/* LOADER */
+window.onload=()=>document.querySelector(".loader").style.display="none"
+
+/* EXPAND MENU */
 function toggleItems(card){
-const items=card.querySelector(".items");
-items.style.maxHeight ? items.style.maxHeight=null : items.style.maxHeight=items.scrollHeight+"px";
+const items=card.querySelector(".items")
+items.style.maxHeight?items.style.maxHeight=null:items.style.maxHeight=items.scrollHeight+"px"
 }
+
+/* SCROLL ANIMATION */
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")})
+})
+document.querySelectorAll(".section").forEach(s=>observer.observe(s))
+
+/* LANGUAGE TOGGLE */
+
+let arabic=false
+function toggleLang(){
+arabic=!arabic
+document.querySelector(".lang-btn").textContent=arabic?"EN":"AR"
+document.querySelectorAll("[data-en]").forEach(el=>{
+el.textContent=arabic?el.dataset.ar:el.dataset.en
+})
+}
+
 </script>
 
 </body>
