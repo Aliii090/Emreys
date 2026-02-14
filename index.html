@@ -39,20 +39,26 @@ font-size:30px;
 }
 
 /* VIDEO BACKGROUND */
-.video-bg{
+/* Background video */
+video.bg-video{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
 }
 
+/* Overlay (LESS BLUR + cleaner look) */
 .overlay{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
-background:rgba(18,63,94,.7);
-backdrop-filter:blur(12px);
+background:rgba(18,63,94,.45);
+backdrop-filter:blur(4px);
 z-index:-1;
 }
 
@@ -96,29 +102,25 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* DRINK SLIDER */
-.slider{
-width:100%;
-overflow:hidden;
-margin:40px 0;
-}
-
+/* Drinks slider container */
 .slides{
 display:flex;
-animation:slide 15s infinite;
+gap:15px;
+animation:slide 12s ease-in-out infinite;
 }
 
+/* Images */
 .slides img{
-width:100%;
-height:200px; /* smaller height */
+width:33%;
+height:180px;
 object-fit:cover;
-border-radius:10px;
+border-radius:12px;
 }
 
+/* Subtle luxury movement */
 @keyframes slide{
 0%{transform:translateX(0)}
-33%{transform:translateX(-100%)}
-66%{transform:translateX(-200%)}
+50%{transform:translateX(-40px)}
 100%{transform:translateX(0)}
 }
 
