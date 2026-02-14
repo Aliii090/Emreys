@@ -39,26 +39,20 @@ font-size:30px;
 }
 
 /* VIDEO BACKGROUND */
-/* Background video */
-video.bg-video{
+.video-bg{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
 }
 
-/* Overlay (LESS BLUR + cleaner look) */
 .overlay{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
-background:rgba(18,63,94,.45);
-backdrop-filter:blur(4px);
+background:rgba(18,63,94,.7);
+backdrop-filter:blur(12px);
 z-index:-1;
 }
 
@@ -102,25 +96,29 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* Drinks slider container */
+/* DRINK SLIDER */
+.slider{
+width:100%;
+overflow:hidden;
+margin:40px 0;
+}
+
 .slides{
 display:flex;
-gap:15px;
-animation:slide 12s ease-in-out infinite;
+animation:slide 15s infinite;
 }
 
-/* Images */
 .slides img{
-width:33%;
-height:180px;
+width:100%;
+height:200px; /* smaller height */
 object-fit:cover;
-border-radius:12px;
+border-radius:10px;
 }
 
-/* Subtle luxury movement */
 @keyframes slide{
 0%{transform:translateX(0)}
-50%{transform:translateX(-40px)}
+33%{transform:translateX(-100%)}
+66%{transform:translateX(-200%)}
 100%{transform:translateX(0)}
 }
 
@@ -359,13 +357,13 @@ background:#fff;
 <p>
   <a href="https://maps.app.goo.gl/ZpBQMe5TVaMo7KiR7" target="_blank">
     <img src="googlemapembed.jpg" alt="Emryes Coffee House Location" 
-         style="width:100%; max-width:100px; border-radius:12px; margin-top:15px;">
+         style="width:100%; max-width:300px; border-radius:12px; margin-top:15px;">
   </a>
 </p>
 
 <!-- SOCIAL LINKS -->
 <p style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-  <a href="https://www.instagram.com/emrys_coffee" target="_blank" 
+  <a href="https://www.instagram.com/emrys_coffee?igsh=cTJ0c2hmODRseGhr" target="_blank" 
      style="text-decoration:none; display:flex; align-items:center; gap:5px;"
      data-en="Follow us on Instagram" data-ar="تابعنا على إنستغرام">
      <img src="Instagram.jpg" alt="Instagram" style="width:30px; height:30px; object-fit:cover; border-radius:5px;">
