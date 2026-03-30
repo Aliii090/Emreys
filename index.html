@@ -12,165 +12,103 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <style>
-        :root { 
-            --black: #080808; 
-            --gold: #c5a059; 
-            --white: #ffffff; 
-            --glass: rgba(255, 255, 255, 0.1);
-        }
-
+        :root { --black: #080808; --gold: #c5a059; --white: #ffffff; }
         * { box-sizing: border-box; transition: all 0.3s ease; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background: var(--white); color: var(--black); overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* Announcement Bar */
-        #top-announcement { background: var(--black); color: var(--white); text-align: center; padding: 12px; font-size: 0.8rem; letter-spacing: 1px; z-index: 1100; position: relative; }
-
-        /* Glassmorphism Header */
-        header { 
-            padding: 15px 5%; 
-            background: rgba(255, 255, 255, 0.8); 
-            backdrop-filter: blur(10px); 
-            border-bottom: 1px solid rgba(0,0,0,0.05); 
-            position: sticky; top: 0; z-index: 1000; 
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        /* Announcement & Header */
+        #top-announcement { background: var(--black); color: var(--white); text-align: center; padding: 12px; font-size: 0.8rem; letter-spacing: 1px; }
+        header { padding: 15px 5%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.6rem; font-weight: 700; letter-spacing: 3px; color: var(--black); text-decoration: none; }
 
-        /* Parallax Video Hero */
-        .hero {
-            position: relative; height: 85vh; width: 100%; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .hero video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: -1; filter: brightness(0.6);
-        }
+        /* Hero Video */
+        .hero { position: relative; height: 80vh; width: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; filter: brightness(0.6); }
         .hero-content { text-align: center; color: white; z-index: 10; }
         .hero-content h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; font-weight: 500; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .hero-content p { font-size: 1.1rem; opacity: 0.9; margin-top: 10px; }
 
-        /* Category Filter Bar */
-        .filter-bar { 
-            display: flex; justify-content: center; gap: 15px; padding: 30px 10px; 
-            overflow-x: auto; white-space: nowrap; background: var(--white);
-        }
-        .filter-btn { 
-            padding: 8px 25px; border: 1px solid #eee; background: none; 
-            cursor: pointer; font-family: 'Tajawal'; font-size: 0.9rem; border-radius: 30px;
-        }
-        .filter-btn.active { background: var(--black); color: white; border-color: var(--black); }
-
-        /* Product Grid (Cubes) */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        /* Product Grid */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-        
-        .card { 
-            background: white; border: 1px solid #f0f0f0; position: relative; 
-            display: flex; flex-direction: column; overflow: hidden;
-        }
+        .card { background: white; border: 1px solid #f0f0f0; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         .card:hover { border-color: var(--gold); transform: translateY(-5px); }
         .card img { width: 100%; height: 160px; object-fit: cover; }
         .card-info { padding: 12px; text-align: center; }
-        .card-info h3 { font-size: 0.9rem; margin: 5px 0; font-weight: 500; }
         .price { color: var(--gold); font-weight: 700; margin-bottom: 10px; display: block; }
-        
-        /* Quantity & Add to Cart */
-        .qty-box { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; gap: 10px; }
-        .qty-btn { background: #f4f4f4; border: none; width: 25px; height: 25px; cursor: pointer; border-radius: 4px; }
         .btn-cart { background: var(--black); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
 
         /* Floating Controls */
         .float-wrap { position: fixed; bottom: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 2000; }
         .right-float { right: 30px; }
         .left-float { left: 30px; }
-        .icon-circle { width: 55px; height: 55px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: white; font-size: 1.5rem; position: relative; }
-        .badge { position: absolute; top: 0; right: 0; background: var(--black); font-size: 0.7rem; padding: 3px 7px; border-radius: 10px; }
-        .social-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); cursor: pointer; transition: 0.3s; }
-        .social-img:hover { transform: scale(1.1); }
+        .icon-circle { width: 55px; height: 55px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: white; position: relative; }
+        .social-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
 
         /* Footer */
         footer { background: var(--black); color: #fff; padding: 60px 20px 20px; text-align: center; }
         .footer-msg { font-size: 1.4rem; color: var(--gold); margin-bottom: 25px; display: block; font-weight: 600; }
-        .rights { border-top: 1px solid #222; padding-top: 20px; font-size: 0.75rem; color: #666; }
 
-        /* Admin Overlay Fix */
-        #admin-overlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #fff; z-index: 5000; padding: 40px 20px; overflow-y: auto; 
-        }
-        .admin-box { max-width: 500px; margin: 0 auto; background: #fafafa; padding: 25px; border-radius: 8px; border: 1px solid #eee; }
-        .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; font-family: 'Tajawal'; }
-        .btn-admin-close { background: #000; color: #fff; border: none; padding: 10px 20px; cursor: pointer; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .delete-btn { position: absolute; top: 5px; right: 5px; background: #ff4d4d; color: white; border: none; padding: 4px 8px; font-size: 10px; cursor: pointer; z-index: 10; border-radius: 2px; }
+        /* ADMIN OVERLAY REDESIGN */
+        #admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; overflow-y: auto; }
+        .admin-box { max-width: 600px; margin: 0 auto; background: #fafafa; padding: 25px; border-radius: 12px; border: 1px solid #eee; }
+        .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Tajawal'; }
+        
+        /* Delete List Styling */
+        .inventory-list { margin-top: 30px; border-top: 2px solid #ddd; padding-top: 20px; }
+        .inventory-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #eee; }
+        .inventory-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
+        .btn-del-main { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-del-main:hover { background: #cc0000; }
     </style>
 </head>
 <body>
 
-<div id="top-announcement">جاري التحميل...</div>
+<div id="top-announcement">...</div>
 
 <header>
-    <a href="#" class="logo">DOUBLE W</a>
-    <div style="font-size: 0.85rem; font-weight: 700; cursor: pointer;" onclick="scrollToShop()">المتجر الرئيسي</div>
+    <a href="#" class="logo">ABU JAD PERFUMES</a>
 </header>
 
 <section class="hero">
-    <video autoplay loop muted playsinline>
-        <source src="background.mp4" type="video/mp4">
-    </video>
-    <div class="hero-content">
-        <h1 class="animate__animated animate__fadeInDown">عطور أبو جاد</h1>
-        <p class="animate__animated animate__fadeInUp">الفخامة التي تليق بك</p>
-    </div>
+    <video autoplay loop muted playsinline><source src="background.mp4" type="video/mp4"></video>
+    <div class="hero-content"><h1>عطور أبو جاد</h1></div>
 </section>
-
-<div class="filter-bar" id="category-filters">
-    <button class="filter-btn active" onclick="filterCat('الكل')">الكل</button>
-    <button class="filter-btn" onclick="filterCat('شرقي')">شرقي</button>
-    <button class="filter-btn" onclick="filterCat('فرنسي')">فرنسي</button>
-    <button class="filter-btn" onclick="filterCat('نسائي')">نسائي</button>
-</div>
 
 <div class="container" id="shop">
     <div class="grid" id="product-grid"></div>
 </div>
 
 <div class="float-wrap right-float">
-    <div class="icon-circle" onclick="checkoutWhatsApp()">🛒 <span class="badge" id="cart-count">0</span></div>
+    <div class="icon-circle" onclick="checkoutWhatsApp()">🛒 <span id="cart-count" style="margin-right:5px;">0</span></div>
 </div>
 
 <div class="float-wrap left-float">
-    <a href="https://instagram.com" target="_blank"><img src="Instagram.png" class="social-img" alt="Instagram"></a>
-    <a href="https://facebook.com" target="_blank"><img src="Facebook.png" class="social-img" alt="Facebook"></a>
-    <a href="https://maps.google.com" target="_blank"><img src="maps.png" class="social-img" alt="Maps"></a>
+    <a href="https://instagram.com" target="_blank"><img src="Instagram.png" class="social-img"></a>
+    <a href="https://facebook.com" target="_blank"><img src="Facebook.png" class="social-img"></a>
+    <a href="#"><img src="maps.png" class="social-img"></a>
 </div>
 
 <footer>
     <span class="footer-msg" id="footer-msg">Double W | Abu Jad Perfumes</span>
-    <div class="rights">
-        جميع الحقوق محفوظة. &copy; 2026 Double W Perfumes
-    </div>
+    <p>© 2026 All Rights Reserved</p>
 </footer>
 
 <div id="admin-overlay">
     <div class="admin-box">
-        <button class="btn-admin-close" onclick="closeAdmin()">× إغلاق لوحة التحكم</button>
-        <h3>إعدادات الموقع</h3>
-        <input type="text" id="set-top-msg" placeholder="نص الشريط العلوي">
-        <input type="text" id="set-footer-msg" placeholder="نص التذييل">
-        <button onclick="saveSettings()" style="width:100%; padding:12px; background:#3498db; color:white; border:none; margin-bottom:20px; cursor:pointer;">تحديث النصوص</button>
+        <button onclick="closeAdmin()" style="background:#000; color:#fff; border:none; padding:10px 20px; cursor:pointer; border-radius:5px; margin-bottom:20px;">× إغلاق اللوحة</button>
         
-        <hr>
-        <h3>إضافة منتج جديد</h3>
-        <input type="text" id="p-name" placeholder="اسم المنتج">
-        <input type="number" id="p-price" placeholder="السعر (JOD)">
-        <select id="p-cat">
-            <option value="شرقي">شرقي</option>
-            <option value="فرنسي">فرنسي</option>
-            <option value="نسائي">نسائي</option>
-        </select>
+        <h3>إضافة عطر جديد</h3>
+        <input type="text" id="p-name" placeholder="اسم العطر">
+        <input type="number" id="p-price" placeholder="السعر">
         <input type="file" id="p-img">
-        <button onclick="addProduct()" id="upload-btn" style="width:100%; padding:15px; background:#2ecc71; color:white; border:none; cursor:pointer;">نشر العطر الآن</button>
-        <p id="status" style="font-size:0.8rem; text-align:center;"></p>
+        <button onclick="addProduct()" style="width:100%; padding:15px; background:#2ecc71; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">نشر المنتج</button>
+        
+        <div class="inventory-list">
+            <h3>قائمة المنتجات الحالية (للحذف)</h3>
+            <p style="font-size: 0.8rem; color: #666;">اضغط على "حذف" لإزالة المنتج من الموقع نهائياً</p>
+            <div id="admin-inventory">
+                </div>
+        </div>
     </div>
 </div>
 
@@ -188,32 +126,19 @@
     const IMGBB_KEY = "2f414f808b93f92c4306a53541beb469";
 
     let cart = [];
-    let isAdminActive = false;
 
-    // Detect Admin
+    // Check Admin Mode
     const checkHash = () => {
         if(window.location.hash === "#admin55") {
-            if(!isAdminActive && prompt("كلمة مرور الإدارة") === "123456") {
-                isAdminActive = true;
+            if(prompt("كلمة مرور الإدارة") === "123456") {
                 document.getElementById('admin-overlay').style.display = 'block';
-                loadProducts("الكل");
-            } else if (!isAdminActive) {
-                window.location.hash = "";
-            }
-        } else {
-            isAdminActive = false;
-            document.getElementById('admin-overlay').style.display = 'none';
-            loadProducts("الكل");
-        }
+            } else { window.location.hash = ""; }
+        } else { document.getElementById('admin-overlay').style.display = 'none'; }
     };
     window.addEventListener("hashchange", checkHash);
     checkHash();
 
-    function closeAdmin() {
-        isAdminActive = false;
-        window.location.hash = "";
-        document.getElementById('admin-overlay').style.display = 'none';
-    }
+    function closeAdmin() { window.location.hash = ""; }
 
     // Live Settings
     db.collection("settings").doc("main").onSnapshot(doc => {
@@ -223,99 +148,77 @@
         }
     });
 
-    // Load Products
-    function loadProducts(cat) {
-        let query = db.collection("products").orderBy("createdAt", "desc");
-        if(cat !== "الكل") query = query.where("category", "==", cat);
+    // Load Products (For Store & Admin List)
+    db.collection("products").orderBy("createdAt", "desc").onSnapshot(snap => {
+        const grid = document.getElementById('product-grid');
+        const adminInv = document.getElementById('admin-inventory');
+        grid.innerHTML = "";
+        adminInv.innerHTML = "";
 
-        query.onSnapshot(snap => {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = "";
-            snap.forEach(doc => {
-                const p = doc.data();
-                grid.innerHTML += `
-                    <div class="card animate__animated animate__fadeIn">
-                        ${isAdminActive ? `<button class="delete-btn" onclick="deleteP('${doc.id}')">حذف ×</button>` : ''}
+        snap.forEach(doc => {
+            const p = doc.data();
+            
+            // Add to main store
+            grid.innerHTML += `
+                <div class="card animate__animated animate__fadeIn">
+                    <img src="${p.image}">
+                    <div class="card-info">
+                        <h3>${p.name}</h3>
+                        <span class="price">${p.price} JOD</span>
+                        <button class="btn-cart" onclick="addToCart('${p.name}', ${p.price})">إضافة للسلة</button>
+                    </div>
+                </div>
+            `;
+
+            // Add to admin delete list
+            adminInv.innerHTML += `
+                <div class="inventory-item">
+                    <div style="display:flex; align-items:center; gap:10px;">
                         <img src="${p.image}">
-                        <div class="card-info">
-                            <h3>${p.name}</h3>
-                            <span class="price">${p.price} JOD</span>
-                            <div class="qty-box">
-                                <button class="qty-btn" onclick="changeQty('${doc.id}', -1)">-</button>
-                                <span id="qty-${doc.id}">1</span>
-                                <button class="qty-btn" onclick="changeQty('${doc.id}', 1)">+</button>
-                            </div>
-                            <button class="btn-cart" onclick="addToCart('${p.name}', ${p.price}, '${doc.id}')">إضافة للسلة</button>
+                        <div>
+                            <div style="font-weight:bold; font-size:0.9rem;">${p.name}</div>
+                            <div style="font-size:0.8rem; color:var(--gold);">${p.price} JOD</div>
                         </div>
                     </div>
-                `;
-            });
+                    <button class="btn-del-main" onclick="deleteP('${doc.id}')">حذف</button>
+                </div>
+            `;
         });
-    }
+    });
 
-    function changeQty(id, val) {
-        const span = document.getElementById('qty-'+id);
-        let current = parseInt(span.innerText);
-        if(current + val > 0) span.innerText = current + val;
-    }
-
-    function addToCart(name, price, id) {
-        const qty = parseInt(document.getElementById('qty-'+id).innerText);
-        cart.push({ name, price, qty });
+    function addToCart(name, price) {
+        cart.push({name, price});
         document.getElementById('cart-count').innerText = cart.length;
-        alert("تمت الإضافة للسلة");
+        alert("تمت الإضافة");
     }
 
     function checkoutWhatsApp() {
         if(cart.length === 0) return alert("السلة فارغة");
-        let msg = "مرحباً، أود طلب الآتي:%0a";
-        let total = 0;
-        cart.forEach(item => {
-            msg += `- ${item.name} (الكمية: ${item.qty})%0a`;
-            total += item.price * item.qty;
-        });
-        msg += `%0aالمجموع الكلي: ${total} JOD`;
+        let msg = "طلب جديد:%0a" + cart.map(i => `- ${i.name}`).join("%0a");
         window.open(`https://wa.me/962782647590?text=${msg}`, '_blank');
     }
 
-    // Admin Panel Functions
-    async function saveSettings() {
-        const topMsg = document.getElementById('set-top-msg').value;
-        const footerMsg = document.getElementById('set-footer-msg').value;
-        await db.collection("settings").doc("main").set({topMsg, footerMsg}, {merge:true});
-        alert("تم الحفظ");
-    }
-
+    // Admin Actions
     async function addProduct() {
         const file = document.getElementById('p-img').files[0];
         const name = document.getElementById('p-name').value;
         const price = document.getElementById('p-price').value;
-        const category = document.getElementById('p-cat').value;
         if(!file || !name) return alert("اكمل البيانات");
 
-        document.getElementById('status').innerText = "جاري الرفع...";
         const formData = new FormData();
         formData.append("image", file);
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
+        const json = await res.json();
         
-        try {
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
-            const json = await res.json();
-            await db.collection("products").add({ name, price, category, image: json.data.url, createdAt: new Date() });
-            document.getElementById('status').innerText = "تم النشر!";
-        } catch(e) { document.getElementById('status').innerText = "فشل الرفع"; }
+        await db.collection("products").add({ name, price, image: json.data.url, createdAt: new Date() });
+        alert("تم النشر");
     }
 
     function deleteP(id) {
-        if(confirm("حذف المنتج نهائياً؟")) db.collection("products").doc(id).delete();
+        if(confirm("هل أنت متأكد من حذف هذا العطر نهائياً؟")) {
+            db.collection("products").doc(id).delete();
+        }
     }
-
-    function filterCat(cat) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        loadProducts(cat);
-    }
-
-    function scrollToShop() { document.getElementById('shop').scrollIntoView(); }
 </script>
 </body>
 </html>
