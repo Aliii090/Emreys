@@ -237,9 +237,28 @@
 
     function addToCart(name, price) { cart.push({name, price}); document.getElementById('cart-count').innerText = cart.length; }
     function checkoutWhatsApp() {
-        let msg = "طلب جديد من عطور أبو جاد:%0a" + cart.map(i => `- ${i.name}`).join("%0a");
-        window.open(`https://wa.me/962782647590?text=${msg}`, '_blank');
-    }
+    if(cart.length === 0) return alert("السلة فارغة! يرجى إضافة عطور أولاً.");
+
+    let msg = "*طلب جديد من متجر عطور أبو جاد* 🛍️%0a";
+    msg += "--------------------------------%0a";
+    
+    let total = 0;
+    
+    cart.forEach((item, index) => {
+        let itemTotal = item.price; // إذا كنت تستخدم نظام الكمية، اضربه هنا
+        msg += `*${index + 1}. ${item.name}*%0a`;
+        msg += `السعر: ${item.price} JOD%0a`;
+        msg += "--------------------------------%0a";
+        total += item.price;
+    });
+
+    msg += `%0a*المجموع الكلي: ${total} دينار أردني* 💰%0a`;
+    msg += "%0a*يرجى تأكيد الطلب للتواصل معي.*";
+
+    // فتح الرابط في نافذة جديدة
+    window.open(`https://wa.me/962782647590?text=${msg}`, '_blank');
+}
+
 
     // Admin Actions
     async function saveSiteSettings() {
