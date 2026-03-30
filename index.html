@@ -15,7 +15,6 @@
         :root { 
             --black: #080808; 
             --gold: #c5a059; 
-            --gold-light: #e4c68d;
             --white: #ffffff; 
             --glass: rgba(255, 255, 255, 0.1);
         }
@@ -39,7 +38,7 @@
 
         /* Parallax Video Hero */
         .hero {
-            position: relative; height: 90vh; width: 100%; overflow: hidden;
+            position: relative; height: 85vh; width: 100%; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
         .hero video {
@@ -47,8 +46,8 @@
             object-fit: cover; z-index: -1; filter: brightness(0.6);
         }
         .hero-content { text-align: center; color: white; z-index: 10; }
-        .hero-content h1 { font-size: clamp(3rem, 8vw, 5rem); margin: 0; font-weight: 300; letter-spacing: 10px; }
-        .hero-content p { font-size: 1.2rem; letter-spacing: 2px; opacity: 0.8; }
+        .hero-content h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; font-weight: 500; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 1.1rem; opacity: 0.9; margin-top: 10px; }
 
         /* Category Filter Bar */
         .filter-bar { 
@@ -56,42 +55,29 @@
             overflow-x: auto; white-space: nowrap; background: var(--white);
         }
         .filter-btn { 
-            padding: 8px 20px; border: 1px solid #eee; background: none; 
-            cursor: pointer; font-family: 'Tajawal'; font-size: 0.9rem; border-radius: 20px;
+            padding: 8px 25px; border: 1px solid #eee; background: none; 
+            cursor: pointer; font-family: 'Tajawal'; font-size: 0.9rem; border-radius: 30px;
         }
         .filter-btn.active { background: var(--black); color: white; border-color: var(--black); }
 
-        /* Skeleton Loader */
-        .skeleton { background: #eee; height: 200px; width: 100%; border-radius: 4px; position: relative; overflow: hidden; }
-        .skeleton::after { 
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-            animation: loading 1.5s infinite;
-        }
-
         /* Product Grid (Cubes) */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         
         .card { 
             background: white; border: 1px solid #f0f0f0; position: relative; 
             display: flex; flex-direction: column; overflow: hidden;
         }
         .card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
         .card-info { padding: 12px; text-align: center; }
         .card-info h3 { font-size: 0.9rem; margin: 5px 0; font-weight: 500; }
         .price { color: var(--gold); font-weight: 700; margin-bottom: 10px; display: block; }
         
         /* Quantity & Add to Cart */
         .qty-box { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; gap: 10px; }
-        .qty-btn { background: #f4f4f4; border: none; width: 25px; height: 25px; cursor: pointer; }
-        .btn-cart { background: var(--black); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-size: 0.8rem; }
-
-        /* Order Tracking Section */
-        .tracking-section { background: #fafafa; padding: 60px 20px; text-align: center; margin: 50px 0; }
-        .tracking-box { max-width: 400px; margin: 20px auto; display: flex; }
-        .tracking-box input { flex: 1; padding: 12px; border: 1px solid #ddd; }
+        .qty-btn { background: #f4f4f4; border: none; width: 25px; height: 25px; cursor: pointer; border-radius: 4px; }
+        .btn-cart { background: var(--black); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
 
         /* Floating Controls */
         .float-wrap { position: fixed; bottom: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 2000; }
@@ -99,16 +85,23 @@
         .left-float { left: 30px; }
         .icon-circle { width: 55px; height: 55px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: white; font-size: 1.5rem; position: relative; }
         .badge { position: absolute; top: 0; right: 0; background: var(--black); font-size: 0.7rem; padding: 3px 7px; border-radius: 10px; }
+        .social-img { width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); cursor: pointer; transition: 0.3s; }
+        .social-img:hover { transform: scale(1.1); }
 
         /* Footer */
-        footer { background: var(--black); color: #fff; padding: 80px 20px 20px; text-align: center; }
-        .footer-msg { font-size: 1.5rem; color: var(--gold); margin-bottom: 30px; display: block; }
-        .rights { border-top: 1px solid #222; padding-top: 20px; font-size: 0.7rem; color: #555; }
+        footer { background: var(--black); color: #fff; padding: 60px 20px 20px; text-align: center; }
+        .footer-msg { font-size: 1.4rem; color: var(--gold); margin-bottom: 25px; display: block; font-weight: 600; }
+        .rights { border-top: 1px solid #222; padding-top: 20px; font-size: 0.75rem; color: #666; }
 
-        /* Admin Overlay */
-        #admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 40px; overflow-y: auto; }
-
-        @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        /* Admin Overlay Fix */
+        #admin-overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #fff; z-index: 5000; padding: 40px 20px; overflow-y: auto; 
+        }
+        .admin-box { max-width: 500px; margin: 0 auto; background: #fafafa; padding: 25px; border-radius: 8px; border: 1px solid #eee; }
+        .admin-box input, .admin-box select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; font-family: 'Tajawal'; }
+        .btn-admin-close { background: #000; color: #fff; border: none; padding: 10px 20px; cursor: pointer; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
+        .delete-btn { position: absolute; top: 5px; right: 5px; background: #ff4d4d; color: white; border: none; padding: 4px 8px; font-size: 10px; cursor: pointer; z-index: 10; border-radius: 2px; }
     </style>
 </head>
 <body>
@@ -117,7 +110,7 @@
 
 <header>
     <a href="#" class="logo">DOUBLE W</a>
-    <div style="font-size: 0.8rem; font-weight: bold; cursor: pointer;" onclick="scrollToShop()">المتجر</div>
+    <div style="font-size: 0.85rem; font-weight: 700; cursor: pointer;" onclick="scrollToShop()">المتجر الرئيسي</div>
 </header>
 
 <section class="hero">
@@ -126,7 +119,7 @@
     </video>
     <div class="hero-content">
         <h1 class="animate__animated animate__fadeInDown">عطور أبو جاد</h1>
-        <p class="animate__animated animate__fadeInUp">أناقة تخطف الأنظار</p>
+        <p class="animate__animated animate__fadeInUp">الفخامة التي تليق بك</p>
     </div>
 </section>
 
@@ -138,19 +131,7 @@
 </div>
 
 <div class="container" id="shop">
-    <div class="grid" id="product-grid">
-        <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-    </div>
-</div>
-
-<div class="tracking-section">
-    <h3>تتبع طلبك</h3>
-    <p>أدخل رقم الهاتف المسجل لدينا لمعرفة حالة الطلب</p>
-    <div class="tracking-box">
-        <input type="text" id="track-phone" placeholder="07XXXXXXXX">
-        <button onclick="trackOrder()" style="background:var(--black); color:white; border:none; padding:0 20px;">بحث</button>
-    </div>
-    <div id="track-result" style="margin-top: 15px; font-weight: bold; color: var(--gold);"></div>
+    <div class="grid" id="product-grid"></div>
 </div>
 
 <div class="float-wrap right-float">
@@ -158,47 +139,42 @@
 </div>
 
 <div class="float-wrap left-float">
-    <a href="#"><img src="Instagram.png" style="width:45px;"></a>
-    <a href="#"><img src="Facebook.png" style="width:45px;"></a>
-    <a href="#"><img src="maps.png" style="width:45px;"></a>
+    <a href="https://instagram.com" target="_blank"><img src="Instagram.png" class="social-img" alt="Instagram"></a>
+    <a href="https://facebook.com" target="_blank"><img src="Facebook.png" class="social-img" alt="Facebook"></a>
+    <a href="https://maps.google.com" target="_blank"><img src="maps.png" class="social-img" alt="Maps"></a>
 </div>
 
 <footer>
-    <span class="footer-msg" id="footer-msg">عطور دبل دبليو | الفخامة في زجاجة</span>
-    <p>Abu Jad Luxury Collection | Jordan</p>
+    <span class="footer-msg" id="footer-msg">Double W | Abu Jad Perfumes</span>
     <div class="rights">
-        جميع الحقوق محفوظة. All Rights Reserved &copy; 2026 Double W Perfumes
+        جميع الحقوق محفوظة. &copy; 2026 Double W Perfumes
     </div>
 </footer>
 
 <div id="admin-overlay">
-    <button onclick="window.location.hash=''">إغلاق الإدارة ×</button>
-    <div style="max-width: 600px; margin: 0 auto; padding-top: 30px;">
-        <h3>لوحة تحكم أبو جاد</h3>
-        <input type="text" id="set-top-msg" placeholder="نص الشريط العلوي" style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="text" id="set-footer-msg" placeholder="نص التذييل" style="width:100%; padding:10px; margin-bottom:10px;">
-        <button onclick="saveSettings()" style="width:100%; padding:10px; background:blue; color:white; border:none;">حفظ نصوص الموقع</button>
+    <div class="admin-box">
+        <button class="btn-admin-close" onclick="closeAdmin()">× إغلاق لوحة التحكم</button>
+        <h3>إعدادات الموقع</h3>
+        <input type="text" id="set-top-msg" placeholder="نص الشريط العلوي">
+        <input type="text" id="set-footer-msg" placeholder="نص التذييل">
+        <button onclick="saveSettings()" style="width:100%; padding:12px; background:#3498db; color:white; border:none; margin-bottom:20px; cursor:pointer;">تحديث النصوص</button>
+        
         <hr>
-        <h4>إضافة عطر</h4>
-        <input type="text" id="p-name" placeholder="الاسم" style="width:100%; padding:10px; margin-bottom:5px;">
-        <input type="number" id="p-price" placeholder="السعر" style="width:100%; padding:10px; margin-bottom:5px;">
-        <select id="p-cat" style="width:100%; padding:10px; margin-bottom:5px;">
+        <h3>إضافة منتج جديد</h3>
+        <input type="text" id="p-name" placeholder="اسم المنتج">
+        <input type="number" id="p-price" placeholder="السعر (JOD)">
+        <select id="p-cat">
             <option value="شرقي">شرقي</option>
             <option value="فرنسي">فرنسي</option>
             <option value="نسائي">نسائي</option>
         </select>
-        <input type="file" id="p-img" style="margin-bottom:10px;">
-        <button onclick="addProduct()" style="width:100%; padding:15px; background:green; color:white; border:none;">نشر المنتج</button>
-        <hr>
-        <h4>إدارة الطلبات (التتبع)</h4>
-        <input type="text" id="adm-track-phone" placeholder="رقم هاتف الزبون">
-        <input type="text" id="adm-track-status" placeholder="الحالة (قيد التنفيذ / تم الشحن)">
-        <button onclick="updateTracking()" style="width:100%; padding:10px; background:orange; border:none;">تحديث حالة الطلب</button>
+        <input type="file" id="p-img">
+        <button onclick="addProduct()" id="upload-btn" style="width:100%; padding:15px; background:#2ecc71; color:white; border:none; cursor:pointer;">نشر العطر الآن</button>
+        <p id="status" style="font-size:0.8rem; text-align:center;"></p>
     </div>
 </div>
 
 <script>
-    // 1. INITIALIZE FIREBASE
     const firebaseConfig = {
         apiKey: "AIzaSyCoy1g_vb32AjBZQNBooSV6thU07Lwbbhk",
         authDomain: "perfumes-6207f.firebaseapp.com",
@@ -212,17 +188,43 @@
     const IMGBB_KEY = "2f414f808b93f92c4306a53541beb469";
 
     let cart = [];
-    let currentCat = "الكل";
+    let isAdminActive = false;
 
-    // 2. LIVE SETTINGS & DATA
+    // Detect Admin
+    const checkHash = () => {
+        if(window.location.hash === "#admin55") {
+            if(!isAdminActive && prompt("كلمة مرور الإدارة") === "123456") {
+                isAdminActive = true;
+                document.getElementById('admin-overlay').style.display = 'block';
+                loadProducts("الكل");
+            } else if (!isAdminActive) {
+                window.location.hash = "";
+            }
+        } else {
+            isAdminActive = false;
+            document.getElementById('admin-overlay').style.display = 'none';
+            loadProducts("الكل");
+        }
+    };
+    window.addEventListener("hashchange", checkHash);
+    checkHash();
+
+    function closeAdmin() {
+        isAdminActive = false;
+        window.location.hash = "";
+        document.getElementById('admin-overlay').style.display = 'none';
+    }
+
+    // Live Settings
     db.collection("settings").doc("main").onSnapshot(doc => {
         if(doc.exists) {
-            document.getElementById('top-announcement').innerText = doc.data().topMsg;
-            document.getElementById('footer-msg').innerText = doc.data().footerMsg;
+            document.getElementById('top-announcement').innerText = doc.data().topMsg || "أهلاً بك";
+            document.getElementById('footer-msg').innerText = doc.data().footerMsg || "Double W Perfumes";
         }
     });
 
-    const loadProducts = (cat) => {
+    // Load Products
+    function loadProducts(cat) {
         let query = db.collection("products").orderBy("createdAt", "desc");
         if(cat !== "الكل") query = query.where("category", "==", cat);
 
@@ -232,8 +234,8 @@
             snap.forEach(doc => {
                 const p = doc.data();
                 grid.innerHTML += `
-                    <div class="card animate__animated animate__zoomIn">
-                        ${window.location.hash === "#admin55" ? `<button onclick="deleteP('${doc.id}')" style="background:red; color:white; border:none; position:absolute; z-index:5;">حذف</button>` : ''}
+                    <div class="card animate__animated animate__fadeIn">
+                        ${isAdminActive ? `<button class="delete-btn" onclick="deleteP('${doc.id}')">حذف ×</button>` : ''}
                         <img src="${p.image}">
                         <div class="card-info">
                             <h3>${p.name}</h3>
@@ -249,10 +251,8 @@
                 `;
             });
         });
-    };
-    loadProducts("الكل");
+    }
 
-    // 3. CART & WHATSAPP
     function changeQty(id, val) {
         const span = document.getElementById('qty-'+id);
         let current = parseInt(span.innerText);
@@ -268,54 +268,45 @@
 
     function checkoutWhatsApp() {
         if(cart.length === 0) return alert("السلة فارغة");
-        let msg = "مرحباً أبو جاد، أود طلب الآتي:%0a";
+        let msg = "مرحباً، أود طلب الآتي:%0a";
         let total = 0;
         cart.forEach(item => {
-            msg += `- ${item.name} (الكمية: ${item.qty}) السعر: ${item.price * item.qty} JOD%0a`;
+            msg += `- ${item.name} (الكمية: ${item.qty})%0a`;
             total += item.price * item.qty;
         });
         msg += `%0aالمجموع الكلي: ${total} JOD`;
         window.open(`https://wa.me/962782647590?text=${msg}`, '_blank');
     }
 
-    // 4. ORDER TRACKING
-    async function trackOrder() {
-        const phone = document.getElementById('track-phone').value;
-        const res = await db.collection("orders").doc(phone).get();
-        if(res.exists) {
-            document.getElementById('track-result').innerText = "حالة طلبك: " + res.data().status;
-        } else {
-            document.getElementById('track-result').innerText = "رقم الهاتف غير مسجل أو لا يوجد طلبات نشطة";
-        }
+    // Admin Panel Functions
+    async function saveSettings() {
+        const topMsg = document.getElementById('set-top-msg').value;
+        const footerMsg = document.getElementById('set-footer-msg').value;
+        await db.collection("settings").doc("main").set({topMsg, footerMsg}, {merge:true});
+        alert("تم الحفظ");
     }
-
-    // 5. ADMIN LOGIC
-    window.addEventListener("hashchange", () => {
-        if(window.location.hash === "#admin55") {
-            if(prompt("كلمة المرور") === "123456") document.getElementById('admin-overlay').style.display = 'block';
-        }
-    });
 
     async function addProduct() {
         const file = document.getElementById('p-img').files[0];
         const name = document.getElementById('p-name').value;
         const price = document.getElementById('p-price').value;
         const category = document.getElementById('p-cat').value;
+        if(!file || !name) return alert("اكمل البيانات");
 
+        document.getElementById('status').innerText = "جاري الرفع...";
         const formData = new FormData();
         formData.append("image", file);
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
-        const json = await res.json();
         
-        await db.collection("products").add({ name, price, category, image: json.data.url, createdAt: new Date() });
-        alert("تم النشر");
+        try {
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
+            const json = await res.json();
+            await db.collection("products").add({ name, price, category, image: json.data.url, createdAt: new Date() });
+            document.getElementById('status').innerText = "تم النشر!";
+        } catch(e) { document.getElementById('status').innerText = "فشل الرفع"; }
     }
 
-    async function updateTracking() {
-        const phone = document.getElementById('adm-track-phone').value;
-        const status = document.getElementById('adm-track-status').value;
-        await db.collection("orders").doc(phone).set({ status });
-        alert("تم تحديث حالة التتبع");
+    function deleteP(id) {
+        if(confirm("حذف المنتج نهائياً؟")) db.collection("products").doc(id).delete();
     }
 
     function filterCat(cat) {
@@ -325,11 +316,6 @@
     }
 
     function scrollToShop() { document.getElementById('shop').scrollIntoView(); }
-    function saveSettings() {
-        const topMsg = document.getElementById('set-top-msg').value;
-        const footerMsg = document.getElementById('set-footer-msg').value;
-        db.collection("settings").doc("main").set({topMsg, footerMsg}, {merge:true});
-    }
 </script>
 </body>
 </html>
