@@ -3,113 +3,202 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Abu Jad | Perfumes</title>
+    <title>عطور أبو جاد | Abu Jad Perfumes</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <style>
-        :root { --black: #000; --gold: #c5a059; --white: #fff; --red: #e74c3c; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background: var(--white); overflow-x: hidden; }
+        :root { 
+            --black: #080808; 
+            --gold: #c5a059; 
+            --gold-light: #e4c68d;
+            --white: #ffffff; 
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        body { font-family: 'Tajawal', sans-serif; margin: 0; background: var(--white); color: var(--black); overflow-x: hidden; scroll-behavior: smooth; }
 
         /* Announcement Bar */
-        #top-announcement { background: var(--black); color: var(--white); text-align: center; padding: 10px; font-size: 0.85rem; font-weight: 500; }
+        #top-announcement { background: var(--black); color: var(--white); text-align: center; padding: 12px; font-size: 0.8rem; letter-spacing: 1px; z-index: 1100; position: relative; }
 
-        header { padding: 20px; text-align: center; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; }
+        /* Glassmorphism Header */
+        header { 
+            padding: 15px 5%; 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+            position: sticky; top: 0; z-index: 1000; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.6rem; font-weight: 700; letter-spacing: 3px; color: var(--black); text-decoration: none; }
 
-        /* Compact Cube Grid */
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        /* Parallax Video Hero */
+        .hero {
+            position: relative; height: 90vh; width: 100%; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -1; filter: brightness(0.6);
+        }
+        .hero-content { text-align: center; color: white; z-index: 10; }
+        .hero-content h1 { font-size: clamp(3rem, 8vw, 5rem); margin: 0; font-weight: 300; letter-spacing: 10px; }
+        .hero-content p { font-size: 1.2rem; letter-spacing: 2px; opacity: 0.8; }
+
+        /* Category Filter Bar */
+        .filter-bar { 
+            display: flex; justify-content: center; gap: 15px; padding: 30px 10px; 
+            overflow-x: auto; white-space: nowrap; background: var(--white);
+        }
+        .filter-btn { 
+            padding: 8px 20px; border: 1px solid #eee; background: none; 
+            cursor: pointer; font-family: 'Tajawal'; font-size: 0.9rem; border-radius: 20px;
+        }
+        .filter-btn.active { background: var(--black); color: white; border-color: var(--black); }
+
+        /* Skeleton Loader */
+        .skeleton { background: #eee; height: 200px; width: 100%; border-radius: 4px; position: relative; overflow: hidden; }
+        .skeleton::after { 
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        /* Product Grid (Cubes) */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px; }
         
         .card { 
-            border: 1px solid #eee; background: #fff; transition: 0.3s; overflow: hidden; 
-            animation: zoomIn 0.5s; display: flex; flex-direction: column; position: relative;
+            background: white; border: 1px solid #f0f0f0; position: relative; 
+            display: flex; flex-direction: column; overflow: hidden;
         }
-        .card:hover { border-color: var(--gold); transform: translateY(-3px); }
-        .card img { width: 100%; height: 160px; object-fit: cover; }
-        .card-info { padding: 10px; text-align: center; flex-grow: 1; }
-        .card-info h3 { font-size: 0.9rem; margin: 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .price { color: var(--gold); font-weight: 700; font-size: 1rem; display: block; }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card-info { padding: 12px; text-align: center; }
+        .card-info h3 { font-size: 0.9rem; margin: 5px 0; font-weight: 500; }
+        .price { color: var(--gold); font-weight: 700; margin-bottom: 10px; display: block; }
         
-        .btn-cart { background: var(--black); color: #fff; border: none; padding: 8px; width: 100%; cursor: pointer; font-size: 0.8rem; margin-top: 5px; }
-        
-        /* Delete Button for Admin */
-        .delete-btn {
-            position: absolute; top: 5px; right: 5px; background: var(--red); color: white;
-            border: none; padding: 4px 8px; font-size: 10px; cursor: pointer; z-index: 10; border-radius: 3px;
-        }
+        /* Quantity & Add to Cart */
+        .qty-box { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; gap: 10px; }
+        .qty-btn { background: #f4f4f4; border: none; width: 25px; height: 25px; cursor: pointer; }
+        .btn-cart { background: var(--black); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-size: 0.8rem; }
 
-        /* Floating Cart */
-        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--gold); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .cart-count { position: absolute; top: 5px; right: 5px; background: var(--black); border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; }
+        /* Order Tracking Section */
+        .tracking-section { background: #fafafa; padding: 60px 20px; text-align: center; margin: 50px 0; }
+        .tracking-box { max-width: 400px; margin: 20px auto; display: flex; }
+        .tracking-box input { flex: 1; padding: 12px; border: 1px solid #ddd; }
 
-        /* Social links */
-        .social-links { position: fixed; bottom: 30px; left: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .social-icon { width: 40px; height: 40px; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        /* Floating Controls */
+        .float-wrap { position: fixed; bottom: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 2000; }
+        .right-float { right: 30px; }
+        .left-float { left: 30px; }
+        .icon-circle { width: 55px; height: 55px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: white; font-size: 1.5rem; position: relative; }
+        .badge { position: absolute; top: 0; right: 0; background: var(--black); font-size: 0.7rem; padding: 3px 7px; border-radius: 10px; }
 
         /* Footer */
-        .black-footer { background: var(--black); color: #888; padding: 50px 20px; text-align: center; font-size: 0.8rem; margin-top: 50px; }
-        #footer-msg { color: #fff; margin-bottom: 10px; display: block; font-size: 1.1rem; font-weight: 600; }
+        footer { background: var(--black); color: #fff; padding: 80px 20px 20px; text-align: center; }
+        .footer-msg { font-size: 1.5rem; color: var(--gold); margin-bottom: 30px; display: block; }
+        .rights { border-top: 1px solid #222; padding-top: 20px; font-size: 0.7rem; color: #555; }
 
         /* Admin Overlay */
-        #admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; padding: 20px; overflow-y: auto; }
-        .admin-form input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
-        .admin-btn { padding: 15px; border: none; cursor: pointer; width: 100%; color: white; font-weight: bold; border-radius: 4px; margin-bottom: 10px; }
+        #admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 40px; overflow-y: auto; }
 
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
     </style>
 </head>
 <body>
 
-<div id="top-announcement">...</div>
+<div id="top-announcement">جاري التحميل...</div>
 
 <header>
-    <div class="logo">Abu Jad</div>
+    <a href="#" class="logo">DOUBLE W</a>
+    <div style="font-size: 0.8rem; font-weight: bold; cursor: pointer;" onclick="scrollToShop()">المتجر</div>
 </header>
 
-<div class="container">
-    <div class="grid" id="product-container"></div>
+<section class="hero">
+    <video autoplay loop muted playsinline>
+        <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+        <h1 class="animate__animated animate__fadeInDown">عطور أبو جاد</h1>
+        <p class="animate__animated animate__fadeInUp">أناقة تخطف الأنظار</p>
+    </div>
+</section>
+
+<div class="filter-bar" id="category-filters">
+    <button class="filter-btn active" onclick="filterCat('الكل')">الكل</button>
+    <button class="filter-btn" onclick="filterCat('شرقي')">شرقي</button>
+    <button class="filter-btn" onclick="filterCat('فرنسي')">فرنسي</button>
+    <button class="filter-btn" onclick="filterCat('نسائي')">نسائي</button>
 </div>
 
-<div class="cart-float" onclick="checkoutWhatsApp()">
-    🛒 <span class="cart-count" id="cart-count">0</span>
+<div class="container" id="shop">
+    <div class="grid" id="product-grid">
+        <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
 </div>
 
-<div class="social-links">
-    <a href="#"><img src="maps.png" class="social-icon"></a>
-    <a href="#"><img src="Facebook.png" class="social-icon"></a>
-    <a href="#"><img src="Instagram.png" class="social-icon"></a>
+<div class="tracking-section">
+    <h3>تتبع طلبك</h3>
+    <p>أدخل رقم الهاتف المسجل لدينا لمعرفة حالة الطلب</p>
+    <div class="tracking-box">
+        <input type="text" id="track-phone" placeholder="07XXXXXXXX">
+        <button onclick="trackOrder()" style="background:var(--black); color:white; border:none; padding:0 20px;">بحث</button>
+    </div>
+    <div id="track-result" style="margin-top: 15px; font-weight: bold; color: var(--gold);"></div>
 </div>
 
-<footer class="black-footer">
-    <span id="footer-msg">Double W Perfumes</span>
-    <p>© All Rights Reserved. Copyright 2026</p>
+<div class="float-wrap right-float">
+    <div class="icon-circle" onclick="checkoutWhatsApp()">🛒 <span class="badge" id="cart-count">0</span></div>
+</div>
+
+<div class="float-wrap left-float">
+    <a href="#"><img src="instagram.png" style="width:45px;"></a>
+    <a href="#"><img src="facebook.png" style="width:45px;"></a>
+    <a href="#"><img src="maps.png" style="width:45px;"></a>
+</div>
+
+<footer>
+    <span class="footer-msg" id="footer-msg">عطور دبل دبليو | الفخامة في زجاجة</span>
+    <p>Abu Jad Luxury Collection | Jordan</p>
+    <div class="rights">
+        جميع الحقوق محفوظة. All Rights Reserved &copy; 2026 Double W Perfumes
+    </div>
 </footer>
 
 <div id="admin-overlay">
-    <button onclick="window.location.hash=''" style="margin-bottom:20px;">إغلاق لوحة التحكم ×</button>
-    <div style="max-width: 500px; margin: 0 auto;">
-        <div class="admin-form">
-            <h3>تعديل نصوص الموقع</h3>
-            <input type="text" id="set-top-msg" placeholder="نص الشريط العلوي">
-            <input type="text" id="set-footer-msg" placeholder="نص التذييل (Footer)">
-            <button onclick="updateSettings()" class="admin-btn" style="background:#3498db;">تحديث النصوص</button>
-            <hr>
-            <h3>إضافة عطر جديد</h3>
-            <input type="text" id="prod-name" placeholder="اسم العطر">
-            <input type="number" id="prod-price" placeholder="السعر">
-            <input type="file" id="prod-img">
-            <button onclick="uploadProduct()" class="admin-btn" style="background:#2ecc71;">رفع ونشر المنتج</button>
-        </div>
+    <button onclick="window.location.hash=''">إغلاق الإدارة ×</button>
+    <div style="max-width: 600px; margin: 0 auto; padding-top: 30px;">
+        <h3>لوحة تحكم أبو جاد</h3>
+        <input type="text" id="set-top-msg" placeholder="نص الشريط العلوي" style="width:100%; padding:10px; margin-bottom:10px;">
+        <input type="text" id="set-footer-msg" placeholder="نص التذييل" style="width:100%; padding:10px; margin-bottom:10px;">
+        <button onclick="saveSettings()" style="width:100%; padding:10px; background:blue; color:white; border:none;">حفظ نصوص الموقع</button>
+        <hr>
+        <h4>إضافة عطر</h4>
+        <input type="text" id="p-name" placeholder="الاسم" style="width:100%; padding:10px; margin-bottom:5px;">
+        <input type="number" id="p-price" placeholder="السعر" style="width:100%; padding:10px; margin-bottom:5px;">
+        <select id="p-cat" style="width:100%; padding:10px; margin-bottom:5px;">
+            <option value="شرقي">شرقي</option>
+            <option value="فرنسي">فرنسي</option>
+            <option value="نسائي">نسائي</option>
+        </select>
+        <input type="file" id="p-img" style="margin-bottom:10px;">
+        <button onclick="addProduct()" style="width:100%; padding:15px; background:green; color:white; border:none;">نشر المنتج</button>
+        <hr>
+        <h4>إدارة الطلبات (التتبع)</h4>
+        <input type="text" id="adm-track-phone" placeholder="رقم هاتف الزبون">
+        <input type="text" id="adm-track-status" placeholder="الحالة (قيد التنفيذ / تم الشحن)">
+        <button onclick="updateTracking()" style="width:100%; padding:10px; background:orange; border:none;">تحديث حالة الطلب</button>
     </div>
 </div>
 
 <script>
+    // 1. INITIALIZE FIREBASE
     const firebaseConfig = {
         apiKey: "AIzaSyCoy1g_vb32AjBZQNBooSV6thU07Lwbbhk",
         authDomain: "perfumes-6207f.firebaseapp.com",
@@ -121,106 +210,125 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const IMGBB_KEY = "2f414f808b93f92c4306a53541beb469";
-    
+
     let cart = [];
-    let isAdmin = false;
+    let currentCat = "الكل";
 
-    // Detect Admin Mode via Hash
-    const checkAdmin = () => {
-        if(window.location.hash === "#admin55") {
-            if(prompt("كلمة المرور") === "123456") {
-                isAdmin = true;
-                document.getElementById('admin-overlay').style.display = 'block';
-            } else {
-                window.location.hash = "";
-            }
-        } else {
-            isAdmin = false;
-            document.getElementById('admin-overlay').style.display = 'none';
-        }
-    };
-    window.addEventListener("hashchange", checkAdmin);
-    checkAdmin();
-
-    // Load Live Settings
-    db.collection("settings").doc("main").onSnapshot((doc) => {
+    // 2. LIVE SETTINGS & DATA
+    db.collection("settings").doc("main").onSnapshot(doc => {
         if(doc.exists) {
-            document.getElementById('top-announcement').innerText = doc.data().topMsg || "أهلاً بكم في متجرنا";
-            document.getElementById('footer-msg').innerText = doc.data().footerMsg || "Double W Perfumes";
+            document.getElementById('top-announcement').innerText = doc.data().topMsg;
+            document.getElementById('footer-msg').innerText = doc.data().footerMsg;
         }
     });
 
-    // Load Live Products
-    db.collection("products").orderBy("createdAt", "desc").onSnapshot((snap) => {
-        const cont = document.getElementById('product-container');
-        cont.innerHTML = "";
-        snap.forEach(doc => {
-            const p = doc.data();
-            cont.innerHTML += `
-                <div class="card">
-                    ${isAdmin ? `<button class="delete-btn" onclick="deleteProd('${doc.id}')">حذف ×</button>` : ''}
-                    <img src="${p.image}">
-                    <div class="card-info">
-                        <h3>${p.name}</h3>
-                        <span class="price">${p.price} JOD</span>
-                        <button class="btn-cart" onclick="addToCart('${p.name}', ${p.price})">إضافة للسلة</button>
-                    </div>
-                </div>
-            `;
-        });
-    });
+    const loadProducts = (cat) => {
+        let query = db.collection("products").orderBy("createdAt", "desc");
+        if(cat !== "الكل") query = query.where("category", "==", cat);
 
-    // Cart Actions
-    function addToCart(name, price) {
-        cart.push({name, price});
+        query.onSnapshot(snap => {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = "";
+            snap.forEach(doc => {
+                const p = doc.data();
+                grid.innerHTML += `
+                    <div class="card animate__animated animate__zoomIn">
+                        ${window.location.hash === "#admin55" ? `<button onclick="deleteP('${doc.id}')" style="background:red; color:white; border:none; position:absolute; z-index:5;">حذف</button>` : ''}
+                        <img src="${p.image}">
+                        <div class="card-info">
+                            <h3>${p.name}</h3>
+                            <span class="price">${p.price} JOD</span>
+                            <div class="qty-box">
+                                <button class="qty-btn" onclick="changeQty('${doc.id}', -1)">-</button>
+                                <span id="qty-${doc.id}">1</span>
+                                <button class="qty-btn" onclick="changeQty('${doc.id}', 1)">+</button>
+                            </div>
+                            <button class="btn-cart" onclick="addToCart('${p.name}', ${p.price}, '${doc.id}')">إضافة للسلة</button>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    };
+    loadProducts("الكل");
+
+    // 3. CART & WHATSAPP
+    function changeQty(id, val) {
+        const span = document.getElementById('qty-'+id);
+        let current = parseInt(span.innerText);
+        if(current + val > 0) span.innerText = current + val;
+    }
+
+    function addToCart(name, price, id) {
+        const qty = parseInt(document.getElementById('qty-'+id).innerText);
+        cart.push({ name, price, qty });
         document.getElementById('cart-count').innerText = cart.length;
-        const btn = event.target;
-        btn.innerText = "تمت الإضافة ✓";
-        setTimeout(() => btn.innerText = "إضافة للسلة", 1000);
+        alert("تمت الإضافة للسلة");
     }
 
     function checkoutWhatsApp() {
-        if(cart.length === 0) return alert("السلة فارغة!");
-        let message = "طلب جديد من الموقع:%0a";
+        if(cart.length === 0) return alert("السلة فارغة");
+        let msg = "مرحباً أبو جاد، أود طلب الآتي:%0a";
         let total = 0;
-        cart.forEach((item, index) => {
-            message += `${index + 1}. ${item.name} (${item.price} JOD)%0a`;
-            total += parseFloat(item.price);
+        cart.forEach(item => {
+            msg += `- ${item.name} (الكمية: ${item.qty}) السعر: ${item.price * item.qty} JOD%0a`;
+            total += item.price * item.qty;
         });
-        message += `%0aالمجموع: ${total} JOD`;
-        window.open(`https://wa.me/962782647590?text=${message}`, '_blank');
+        msg += `%0aالمجموع الكلي: ${total} JOD`;
+        window.open(`https://wa.me/962782647590?text=${msg}`, '_blank');
     }
 
-    // Admin Functions
-    async function updateSettings() {
-        const topMsg = document.getElementById('set-top-msg').value;
-        const footerMsg = document.getElementById('set-footer-msg').value;
-        await db.collection("settings").doc("main").set({ topMsg, footerMsg }, {merge: true});
-        alert("تم التحديث");
+    // 4. ORDER TRACKING
+    async function trackOrder() {
+        const phone = document.getElementById('track-phone').value;
+        const res = await db.collection("orders").doc(phone).get();
+        if(res.exists) {
+            document.getElementById('track-result').innerText = "حالة طلبك: " + res.data().status;
+        } else {
+            document.getElementById('track-result').innerText = "رقم الهاتف غير مسجل أو لا يوجد طلبات نشطة";
+        }
     }
 
-    async function uploadProduct() {
-        const file = document.getElementById('prod-img').files[0];
-        const name = document.getElementById('prod-name').value;
-        const price = document.getElementById('prod-price').value;
-        if(!file || !name || !price) return alert("يرجى تعبئة كافة الحقول");
+    // 5. ADMIN LOGIC
+    window.addEventListener("hashchange", () => {
+        if(window.location.hash === "#admin55") {
+            if(prompt("كلمة المرور") === "123456") document.getElementById('admin-overlay').style.display = 'block';
+        }
+    });
+
+    async function addProduct() {
+        const file = document.getElementById('p-img').files[0];
+        const name = document.getElementById('p-name').value;
+        const price = document.getElementById('p-price').value;
+        const category = document.getElementById('p-cat').value;
 
         const formData = new FormData();
         formData.append("image", file);
-        try {
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
-            const json = await res.json();
-            await db.collection("products").add({ name, price, image: json.data.url, createdAt: new Date() });
-            alert("تم النشر بنجاح");
-            document.getElementById('prod-name').value = "";
-            document.getElementById('prod-price').value = "";
-        } catch(e) { alert("فشل الرفع"); }
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
+        const json = await res.json();
+        
+        await db.collection("products").add({ name, price, category, image: json.data.url, createdAt: new Date() });
+        alert("تم النشر");
     }
 
-    function deleteProd(id) {
-        if(confirm("هل تريد بالتأكيد حذف هذا المنتج نهائياً؟")) {
-            db.collection("products").doc(id).delete();
-        }
+    async function updateTracking() {
+        const phone = document.getElementById('adm-track-phone').value;
+        const status = document.getElementById('adm-track-status').value;
+        await db.collection("orders").doc(phone).set({ status });
+        alert("تم تحديث حالة التتبع");
+    }
+
+    function filterCat(cat) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        loadProducts(cat);
+    }
+
+    function scrollToShop() { document.getElementById('shop').scrollIntoView(); }
+    function saveSettings() {
+        const topMsg = document.getElementById('set-top-msg').value;
+        const footerMsg = document.getElementById('set-footer-msg').value;
+        db.collection("settings").doc("main").set({topMsg, footerMsg}, {merge:true});
     }
 </script>
 </body>
