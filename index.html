@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>عطور دبل دبليو | Double W</title>
+    <title>Double W | Perfumes</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -12,91 +12,104 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <style>
-        :root { --black: #000; --gold: #c5a059; --white: #fff; --gray: #f9f9f9; }
-        * { box-sizing: border-box; -webkit-user-select: auto !important; user-select: auto !important; }
+        :root { --black: #000; --gold: #c5a059; --white: #fff; --red: #e74c3c; }
+        * { box-sizing: border-box; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background: var(--white); overflow-x: hidden; }
 
         /* Announcement Bar */
-        .top-bar { background: var(--black); color: var(--white); text-align: center; padding: 10px; font-size: 0.9rem; letter-spacing: 1px; animation: fadeInDown 1s; }
+        #top-announcement { background: var(--black); color: var(--white); text-align: center; padding: 10px; font-size: 0.85rem; font-weight: 500; }
 
-        header { padding: 25px; text-align: center; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 2rem; font-weight: 700; letter-spacing: 3px; cursor: pointer; transition: 0.3s; }
-        .logo:hover { color: var(--gold); }
+        header { padding: 20px; text-align: center; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; }
 
-        /* Hero Section */
-        .hero { height: 60vh; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1500&auto=format&fit=crop'); background-size: cover; background-position: center; }
-        .hero h1 { font-size: 3.5rem; margin: 0; animation: fadeInUp 1.2s; }
-
-        /* Product Grid */
-        .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; }
-        .section-title { text-align: center; margin-bottom: 40px; font-size: 2rem; position: relative; }
-        .section-title::after { content: ''; width: 50px; height: 2px; background: var(--gold); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
+        /* Compact Cube Grid */
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .card { border-radius: 0px; border: 1px solid #f0f0f0; background: #fff; transition: 0.4s; overflow: hidden; position: relative; animation: fadeIn 1.5s; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 350px; object-fit: cover; transition: 0.5s; }
-        .card:hover img { transform: scale(1.05); }
-        .card-info { padding: 20px; text-align: center; }
-        .price { color: var(--gold); font-weight: 700; font-size: 1.4rem; display: block; margin: 10px 0; }
-        .btn-order { background: var(--black); color: #fff; border: none; padding: 12px 25px; cursor: pointer; width: 100%; font-family: 'Tajawal'; font-weight: 600; transition: 0.3s; }
-        .btn-order:hover { background: var(--gold); }
+        .card { 
+            border: 1px solid #eee; background: #fff; transition: 0.3s; overflow: hidden; 
+            animation: zoomIn 0.5s; display: flex; flex-direction: column; position: relative;
+        }
+        .card:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card-info { padding: 10px; text-align: center; flex-grow: 1; }
+        .card-info h3 { font-size: 0.9rem; margin: 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .price { color: var(--gold); font-weight: 700; font-size: 1rem; display: block; }
+        
+        .btn-cart { background: var(--black); color: #fff; border: none; padding: 8px; width: 100%; cursor: pointer; font-size: 0.8rem; margin-top: 5px; }
+        
+        /* Delete Button for Admin */
+        .delete-btn {
+            position: absolute; top: 5px; right: 5px; background: var(--red); color: white;
+            border: none; padding: 4px 8px; font-size: 10px; cursor: pointer; z-index: 10; border-radius: 3px;
+        }
 
-        /* Social Floating Buttons */
-        .social-links { position: fixed; bottom: 30px; left: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
-        .social-icon { width: 50px; height: 50px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-        .social-icon:hover { transform: scale(1.1) rotate(5deg); }
+        /* Floating Cart */
+        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--gold); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .cart-count { position: absolute; top: 5px; right: 5px; background: var(--black); border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; }
 
-        /* Hidden Admin Overlay */
-        #admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; overflow-y: auto; padding: 50px 20px; }
-        .admin-card { max-width: 600px; margin: 0 auto; background: var(--gray); padding: 30px; border: 1px solid #ddd; }
-        .admin-form input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; }
-        .btn-save { background: #27ae60; color: white; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; }
-        .btn-close { background: #000; color: #fff; margin-bottom: 20px; padding: 10px; border: none; cursor: pointer; }
-        .delete-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 5px 10px; cursor: pointer; z-index: 5; font-size: 0.8rem; }
+        /* Social links */
+        .social-links { position: fixed; bottom: 30px; left: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        .social-icon { width: 40px; height: 40px; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+
+        /* Footer */
+        .black-footer { background: var(--black); color: #888; padding: 50px 20px; text-align: center; font-size: 0.8rem; margin-top: 50px; }
+        #footer-msg { color: #fff; margin-bottom: 10px; display: block; font-size: 1.1rem; font-weight: 600; }
+
+        /* Admin Overlay */
+        #admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; padding: 20px; overflow-y: auto; }
+        .admin-form input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .admin-btn { padding: 15px; border: none; cursor: pointer; width: 100%; color: white; font-weight: bold; border-radius: 4px; margin-bottom: 10px; }
+
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<div class="top-bar">شحن مجاني للطلبات أكثر من 50 دينار</div>
+<div id="top-announcement">...</div>
 
 <header>
     <div class="logo">DOUBLE W</div>
 </header>
 
-<section class="hero">
-    <h1 class="animate__animated animate__fadeInUp">أناقة الروائح الشرقية</h1>
-</section>
-
 <div class="container">
-    <h2 class="section-title">الأكثر مبيعاً</h2>
-    <div class="grid" id="product-container">
-        <p style="text-align: center; grid-column: 1/-1;">جاري تحميل العطور...</p>
-    </div>
+    <div class="grid" id="product-container"></div>
+</div>
+
+<div class="cart-float" onclick="checkoutWhatsApp()">
+    🛒 <span class="cart-count" id="cart-count">0</span>
 </div>
 
 <div class="social-links">
-    <a href="https://maps.google.com" target="_blank"><img src="maps.png" class="social-icon" alt="Maps"></a>
-    <a href="https://facebook.com" target="_blank"><img src="Facebook.png" class="social-icon" alt="Facebook"></a>
-    <a href="https://instagram.com" target="_blank"><img src="Instagram.png" class="social-icon" alt="Instagram"></a>
+    <a href="#"><img src="maps.png" class="social-icon"></a>
+    <a href="#"><img src="facebook.png" class="social-icon"></a>
+    <a href="#"><img src="instagram.png" class="social-icon"></a>
 </div>
 
+<footer class="black-footer">
+    <span id="footer-msg">Double W Perfumes</span>
+    <p>© All Rights Reserved. Copyright 2026</p>
+</footer>
+
 <div id="admin-overlay">
-    <button class="btn-close" onclick="window.location.hash=''">إغلاق اللوحة ×</button>
-    <div class="admin-card">
-        <h3>إضافة منتج جديد</h3>
+    <button onclick="window.location.hash=''" style="margin-bottom:20px;">إغلاق لوحة التحكم ×</button>
+    <div style="max-width: 500px; margin: 0 auto;">
         <div class="admin-form">
-            <input type="text" id="prod-name" placeholder="اسم المنتج">
+            <h3>تعديل نصوص الموقع</h3>
+            <input type="text" id="set-top-msg" placeholder="نص الشريط العلوي">
+            <input type="text" id="set-footer-msg" placeholder="نص التذييل (Footer)">
+            <button onclick="updateSettings()" class="admin-btn" style="background:#3498db;">تحديث النصوص</button>
+            <hr>
+            <h3>إضافة عطر جديد</h3>
+            <input type="text" id="prod-name" placeholder="اسم العطر">
             <input type="number" id="prod-price" placeholder="السعر">
             <input type="file" id="prod-img">
-            <button class="btn-save" onclick="uploadToImgBB()">حفظ ونشر المنتج</button>
-            <p id="upload-status" style="margin-top:10px; font-weight:bold;"></p>
+            <button onclick="uploadProduct()" class="admin-btn" style="background:#2ecc71;">رفع ونشر المنتج</button>
         </div>
     </div>
 </div>
 
 <script>
-    // 1. CONFIGS
     const firebaseConfig = {
         apiKey: "AIzaSyCoy1g_vb32AjBZQNBooSV6thU07Lwbbhk",
         authDomain: "perfumes-6207f.firebaseapp.com",
@@ -108,81 +121,106 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const IMGBB_KEY = "2f414f808b93f92c4306a53541beb469";
-    const ADMIN_PASS = "adminlogin55"; // <--- CHANGE YOUR PASSWORD HERE
+    
+    let cart = [];
+    let isAdmin = false;
 
-    // 2. HIDDEN ADMIN TRIGGER
-    window.addEventListener("hashchange", () => {
+    // Detect Admin Mode via Hash
+    const checkAdmin = () => {
         if(window.location.hash === "#admin55") {
-            let pass = prompt("الرجاء إدخال كلمة مرور الإدارة:");
-            if(pass === ADMIN_PASS) {
+            if(prompt("كلمة المرور") === "123456") {
+                isAdmin = true;
                 document.getElementById('admin-overlay').style.display = 'block';
-                renderProducts(true); // Show delete buttons
             } else {
-                alert("كلمة مرور خاطئة");
                 window.location.hash = "";
             }
         } else {
+            isAdmin = false;
             document.getElementById('admin-overlay').style.display = 'none';
-            renderProducts(false);
+        }
+    };
+    window.addEventListener("hashchange", checkAdmin);
+    checkAdmin();
+
+    // Load Live Settings
+    db.collection("settings").doc("main").onSnapshot((doc) => {
+        if(doc.exists) {
+            document.getElementById('top-announcement').innerText = doc.data().topMsg || "أهلاً بكم في متجرنا";
+            document.getElementById('footer-msg').innerText = doc.data().footerMsg || "Double W Perfumes";
         }
     });
 
-    // 3. RENDER PRODUCTS
-    function renderProducts(isAdmin) {
-        const container = document.getElementById('product-container');
-        db.collection("products").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
-            container.innerHTML = "";
-            snapshot.forEach((doc) => {
-                const p = doc.data();
-                container.innerHTML += `
-                    <div class="card animate__animated animate__fadeIn">
-                        ${isAdmin ? `<div class="delete-badge" onclick="deleteProd('${doc.id}')">حذف ×</div>` : ''}
-                        <img src="${p.image}" alt="${p.name}">
-                        <div class="card-info">
-                            <h3>${p.name}</h3>
-                            <span class="price">${p.price} JOD</span>
-                            <button class="btn-order">اطلب الآن</button>
-                        </div>
+    // Load Live Products
+    db.collection("products").orderBy("createdAt", "desc").onSnapshot((snap) => {
+        const cont = document.getElementById('product-container');
+        cont.innerHTML = "";
+        snap.forEach(doc => {
+            const p = doc.data();
+            cont.innerHTML += `
+                <div class="card">
+                    ${isAdmin ? `<button class="delete-btn" onclick="deleteProd('${doc.id}')">حذف ×</button>` : ''}
+                    <img src="${p.image}">
+                    <div class="card-info">
+                        <h3>${p.name}</h3>
+                        <span class="price">${p.price} JOD</span>
+                        <button class="btn-cart" onclick="addToCart('${p.name}', ${p.price})">إضافة للسلة</button>
                     </div>
-                `;
-            });
+                </div>
+            `;
         });
+    });
+
+    // Cart Actions
+    function addToCart(name, price) {
+        cart.push({name, price});
+        document.getElementById('cart-count').innerText = cart.length;
+        const btn = event.target;
+        btn.innerText = "تمت الإضافة ✓";
+        setTimeout(() => btn.innerText = "إضافة للسلة", 1000);
     }
 
-    // Initialize
-    renderProducts(false);
+    function checkoutWhatsApp() {
+        if(cart.length === 0) return alert("السلة فارغة!");
+        let message = "طلب جديد من الموقع:%0a";
+        let total = 0;
+        cart.forEach((item, index) => {
+            message += `${index + 1}. ${item.name} (${item.price} JOD)%0a`;
+            total += parseFloat(item.price);
+        });
+        message += `%0aالمجموع: ${total} JOD`;
+        window.open(`https://wa.me/962782647590?text=${message}`, '_blank');
+    }
 
-    // 4. ADMIN ACTIONS
-    async function uploadToImgBB() {
+    // Admin Functions
+    async function updateSettings() {
+        const topMsg = document.getElementById('set-top-msg').value;
+        const footerMsg = document.getElementById('set-footer-msg').value;
+        await db.collection("settings").doc("main").set({ topMsg, footerMsg }, {merge: true});
+        alert("تم التحديث");
+    }
+
+    async function uploadProduct() {
         const file = document.getElementById('prod-img').files[0];
         const name = document.getElementById('prod-name').value;
         const price = document.getElementById('prod-price').value;
-        const status = document.getElementById('upload-status');
+        if(!file || !name || !price) return alert("يرجى تعبئة كافة الحقول");
 
-        if(!file || !name || !price) return alert("اكمل البيانات");
-
-        status.innerText = "جاري الرفع...";
         const formData = new FormData();
         formData.append("image", file);
-
         try {
             const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: formData });
             const json = await res.json();
-            const url = json.data.url;
-
-            await db.collection("products").add({
-                name, price, image: url, createdAt: new Date()
-            });
-            status.innerText = "تم بنجاح!";
+            await db.collection("products").add({ name, price, image: json.data.url, createdAt: new Date() });
+            alert("تم النشر بنجاح");
             document.getElementById('prod-name').value = "";
             document.getElementById('prod-price').value = "";
-        } catch(e) {
-            status.innerText = "فشل الرفع";
-        }
+        } catch(e) { alert("فشل الرفع"); }
     }
 
     function deleteProd(id) {
-        if(confirm("حذف هذا العطر؟")) db.collection("products").doc(id).delete();
+        if(confirm("هل تريد بالتأكيد حذف هذا المنتج نهائياً؟")) {
+            db.collection("products").doc(id).delete();
+        }
     }
 </script>
 </body>
